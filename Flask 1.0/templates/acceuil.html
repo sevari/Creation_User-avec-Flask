@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='mon_style.css') }}" type="text/css"> -->
+    <title>BO Flask</title>
+</head>
+<body>
+    <h1>Creation d'utilisateur sur votre machine virtuel</h1>
+    <form id="userForm">
+        <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required><br><br>
+        <input type="password" id="password" name="password" placeholder="Mot de passe" required><br><br>
+        <button type="submit">Creer l'utilisateur</button>
+    </form>
+    <div id="response"></div>
+  
+    <script>
+            document.getElementById('userForm').addEventListener('submit', function(event){
+                event.preventDefault();
+
+                var form = new FormData(this);
+                fetch('/create_user', {
+                    method: 'POST',
+                    body: form
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success){
+                        document.getElementById('response').innerText = data.message;
+
+                    }else {
+                        document.getElementById('response').innerText = data.message;
+
+                    }
+                })
+                .catch(error => console.error('Erreur:', error));
+            });
+
+    </script>
+</body>
+</html>
